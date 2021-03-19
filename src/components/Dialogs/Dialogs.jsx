@@ -6,12 +6,16 @@ import MassageItem from "./MassageItem/MassageItem";
 
 const Dialogs = (props) => {
 
-
     let newMessage = React.createRef()
 
     let addMessage = () => {
         let text = newMessage.current.value
-        alert(text)
+        props.addMessage(text)
+    }
+
+    let onMessageChange = () => {
+        let text = newMessage.current.value
+        props.updateNewMessageText(text)
     }
 
     let message = props.state.messages.map(m => <MassageItem message={m.message} id={m.id}/>)
@@ -28,7 +32,11 @@ const Dialogs = (props) => {
                     {message}
                 </div>
                 <div>
-                    <textarea className={s.input} ref={newMessage}></textarea>
+                    <textarea className={s.input}
+                              ref={newMessage}
+                              onChange={onMessageChange}
+                              value={props.state.newMessageText}>
+                    </textarea>
                     <button className={s.button} onClick={addMessage}>Send</button>
                 </div>
             </div>
